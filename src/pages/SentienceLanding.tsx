@@ -27,7 +27,7 @@ export default function SentienceLanding() {
             textColor: "#c7d2fe",
             links: [
                 { label: "Smart Journalling", ariaLabel: "Open Smart Journal", href: "/smart-journalling" },
-                { label: "Voice Notes", ariaLabel: "Record Voice Note" },
+                { label: "Voice Notes", ariaLabel: "Record Voice Note", href: "/voice-notes" },
                 { label: "Templates", ariaLabel: "View Templates", href: "/smart-journal" }
             ]
         },

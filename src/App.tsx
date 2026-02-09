@@ -10,6 +10,7 @@ import SmartJournalling from './pages/SmartJournalling';
 import CognitiveReframing from './pages/CognitiveReframing';
 import BalancedThoughtPage from './pages/BalancedThoughtPage';
 import ScrollAnimationPage from './pages/ScrollAnimationPage';
+import VoiceNotes from './pages/VoiceNotes';
 
 const App = () => {
     return (
@@ -26,6 +27,7 @@ const App = () => {
                 <Route path="/smart-journalling" element={<SmartJournalling />} />
                 <Route path="/cognitive-reframing" element={<CognitiveReframing />} />
                 <Route path="/balanced-thought" element={<BalancedThoughtPage />} />
+                <Route path="/voice-notes" element={<VoiceNotes />} />
             </Routes>
         </BrowserRouter>
     );
