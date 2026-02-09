@@ -26,19 +26,21 @@ export const BreathingTimer: React.FC<BreathingTimerProps> = ({
     const [audioEnabled, setAudioEnabled] = useState(true);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const phaseTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const audioEnabledRef = useRef(audioEnabled);
 
     const totalCycles = pattern === '2-4-6' ? Math.ceil(duration * 60 / 12) : Math.ceil(duration * 60 / 16);
 
-    const getPhaseInfo = () => {
+    const getPhaseInfo = (phase?: string) => {
+        const currentPhaseToUse = phase !== undefined ? phase : currentPhase;
         if (pattern === '2-4-6') {
-            switch (currentPhase) {
+            switch (currentPhaseToUse) {
                 case 'inhale': return { text: 'Breathe In', duration: 2, next: 'hold' };
                 case 'hold': return { text: 'Hold', duration: 4, next: 'exhale' };
                 case 'exhale': return { text: 'Breathe Out', duration: 6, next: 'inhale' };
                 default: return { text: 'Ready', duration: 0, next: 'inhale' };
             }
         } else {
-            switch (currentPhase) {
+            switch (currentPhaseToUse) {
                 case 'inhale': return { text: 'Breathe In', duration: 4, next: 'hold1' };
                 case 'hold1': return { text: 'Hold', duration: 4, next: 'exhale' };
                 case 'exhale': return { text: 'Breathe Out', duration: 4, next: 'hold2' };
@@ -51,14 +53,14 @@ export const BreathingTimer: React.FC<BreathingTimerProps> = ({
     const startNextPhase = (phase: string) => {
         setCurrentPhase(phase as any);
 
-        // Play audio cue
-        if (audioEnabled && phase !== 'idle') {
+        // Play audio cue - use ref to get current value
+        if (audioEnabledRef.current && phase !== 'idle') {
             const audioType = phase === 'hold1' || phase === 'hold2' ? 'hold' : phase;
             playBreathingTone(audioType as 'inhale' | 'hold' | 'exhale', 0.3);
             triggerHaptic(50);
         }
 
-        const phaseInfo = getPhaseInfo();
+        const phaseInfo = getPhaseInfo(phase);
 
         if (phaseTimerRef.current) {
             clearTimeout(phaseTimerRef.current);
@@ -114,6 +116,11 @@ export const BreathingTimer: React.FC<BreathingTimerProps> = ({
             if (timerRef.current) clearInterval(timerRef.current);
         };
     }, [isActive, onComplete]);
+
+    // Sync audioEnabled state with ref
+    useEffect(() => {
+        audioEnabledRef.current = audioEnabled;
+    }, [audioEnabled]);
 
     // Cleanup on unmount
     useEffect(() => {
@@ -226,8 +233,8 @@ export const BreathingTimer: React.FC<BreathingTimerProps> = ({
                     <button
                         onClick={() => setAudioEnabled(!audioEnabled)}
                         className={`p-4 rounded-2xl border-2 transition-all ${audioEnabled
-                                ? 'bg-white/10 border-white/20 text-white hover:bg-white/20'
-                                : 'bg-white/5 border-white/10 text-white/40 hover:bg-white/10'
+                            ? 'bg-white/10 border-white/20 text-white hover:bg-white/20'
+                            : 'bg-white/5 border-white/10 text-white/40 hover:bg-white/10'
                             }`}
                         aria-label={audioEnabled ? 'Mute audio' : 'Enable audio'}
                     >
