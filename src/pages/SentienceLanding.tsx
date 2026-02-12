@@ -101,8 +101,8 @@ export default function SentienceLanding() {
                     title="Decode Your Psyche"
                     subtitle="Pattern Recognition"
                     meta="Sentience v1.0"
-                    media="https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4" // Abstract neuron-like lines
-                    mediaType="video"
+                    media="/decode-psyche.png"
+                    mediaType="image"
                     scrollHeightVh={400} // Increased from default to keep it sticky longer
                     overlay={{
                         caption: "SYSTEM • SENTIENCE",

@@ -100,7 +100,7 @@ const CenterImage = () => {
                 opacity,
                 // Abstract fluid/water image for calmness
                 backgroundImage:
-                    "url(https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop)",
+                    "url(/emotional-silhouette.png?v=2)",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
             }}
