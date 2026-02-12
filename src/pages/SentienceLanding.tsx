@@ -37,7 +37,7 @@ export default function SentienceLanding() {
             textColor: "#bae6fd",
             links: [
                 { label: "Weekly Report", ariaLabel: "View Weekly Report", href: "/weekly-report" },
-                { label: "Emotional Patterns", ariaLabel: "View Emotional Patterns" },
+                { label: "Emotional Patterns", ariaLabel: "View Emotional Patterns", href: "/emotional-patterns" },
                 { label: "Emotional Unloading", ariaLabel: "View Emotional Unloading", href: "/emotional-unloading" }
             ]
         }

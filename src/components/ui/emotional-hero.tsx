@@ -12,7 +12,7 @@ import { Brain, ArrowRight, Heart, Cloud, Zap, Activity } from "lucide-react";
 // Manual Lenis implementation to avoid import issues
 import Lenis from "lenis";
 
-export const EmotionalHero = () => {
+export const EmotionalHero = ({ children }: { children?: React.ReactNode }) => {
     useEffect(() => {
         const lenis = new Lenis();
         function raf(time: number) {
@@ -26,10 +26,10 @@ export const EmotionalHero = () => {
     }, []);
 
     return (
-        <div className="bg-zinc-950 min-h-screen text-white selection:bg-cyan-500/30">
+        <div className="bg-transparent min-h-screen text-white selection:bg-cyan-500/30">
             <Nav />
             <Hero />
-            <History />
+            {children || <History />}
         </div>
     );
 };
@@ -67,7 +67,7 @@ const Hero = () => {
 
             <ParallaxImages />
 
-            <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-zinc-950/0 to-zinc-950" />
+            <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-transparent to-black" />
         </div>
     );
 };

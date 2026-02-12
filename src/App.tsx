@@ -12,6 +12,8 @@ import BalancedThoughtPage from './pages/BalancedThoughtPage';
 import ScrollAnimationPage from './pages/ScrollAnimationPage';
 import VoiceNotes from './pages/VoiceNotes';
 
+import EmotionalPatterns from './pages/EmotionalPatterns';
+
 const App = () => {
     return (
         <BrowserRouter>
@@ -22,6 +24,7 @@ const App = () => {
                 <Route path="/sentience" element={<SentienceLanding />} />
                 <Route path="/mind-info" element={<MindInfo />} />
                 <Route path="/emotional-unloading" element={<EmotionalUnloading />} />
+                <Route path="/emotional-patterns" element={<EmotionalPatterns />} />
                 <Route path="/weekly-report" element={<WeeklyReport />} />
                 <Route path="/smart-journal" element={<SmartJournal />} />
                 <Route path="/smart-journalling" element={<SmartJournalling />} />

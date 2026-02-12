@@ -6,11 +6,13 @@ import { Link } from 'react-router-dom';
 import Groq from "groq-sdk";
 import NeuralBackground from "@/components/ui/flow-field-background";
 import { cn } from "@/lib/utils";
+import { useMoodData } from "@/hooks/useMoodData";
 
 // --- Types ---
 
 interface AIAnalysis {
     sentiment: 'Positive' | 'Neutral' | 'Negative' | 'Anxious' | 'Hopeful';
+    moodScore: number;
     tags: string[];
     reflection: string;
     insight: string;
@@ -113,6 +115,7 @@ const MoodChart = () => {
 };
 
 export default function SmartJournalling() {
+    const { addLog } = useMoodData();
     const [entry, setEntry] = useState('');
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [analysis, setAnalysis] = useState<AIAnalysis | null>(null);
@@ -189,6 +192,7 @@ export default function SmartJournalling() {
                 Schema:
                 {
                     "sentiment": "Positive" | "Neutral" | "Negative" | "Anxious" | "Hopeful",
+                    "moodScore": number, // Rate the mood intensity 1-10 based on the text
                     "tags": ["string"],
                     "reflection": "string",
                     "insight": "string"
@@ -213,6 +217,14 @@ export default function SmartJournalling() {
             console.log("Raw AI Response:", content);
 
             const data: AIAnalysis = JSON.parse(content);
+
+            // SAVE TO LOCAL STORAGE via Hook
+            addLog({
+                value: data.moodScore || 5, // Fallback
+                sentiment: data.sentiment,
+                tags: data.tags,
+                note: entry.substring(0, 50) + "..."
+            });
 
             setAnalysis(data);
             setShowSidebar(true);
