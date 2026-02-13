@@ -28,6 +28,8 @@ interface CardNavProps {
     buttonTextColor: string;
     ease?: string;
     theme?: string;
+    isOpen?: boolean;
+    onOpenChange?: (isOpen: boolean) => void;
 }
 
 export default function CardNav({
@@ -38,14 +40,26 @@ export default function CardNav({
     buttonBgColor,
     buttonTextColor,
     ease = "circ.out",
+    isOpen: controlledIsOpen,
+    onOpenChange,
 }: CardNavProps) {
-    const [isOpen, setIsOpen] = useState(false);
+    const [internalIsOpen, setInternalIsOpen] = useState(false);
     const [showGuidedBreakthroughs, setShowGuidedBreakthroughs] = useState(false);
     const [showThoughtRewiring, setShowThoughtRewiring] = useState(false);
     const [showNeuralInsights, setShowNeuralInsights] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+    const isControlled = controlledIsOpen !== undefined;
+    const isOpen = isControlled ? controlledIsOpen : internalIsOpen;
+
+    const handleOpenChange = (newState: boolean) => {
+        if (!isControlled) {
+            setInternalIsOpen(newState);
+        }
+        onOpenChange?.(newState);
+    };
 
     // Toggle Menu Animation
     useEffect(() => {
@@ -101,13 +115,13 @@ export default function CardNav({
     const handleLinkClick = (label: string, href?: string) => {
         if (label === "Guided Breakthroughs") {
             setShowGuidedBreakthroughs(true);
-            setIsOpen(false);
+            handleOpenChange(false);
         } else if (label === "Thoughts and Exercises") {
             setShowThoughtRewiring(true);
-            setIsOpen(false);
+            handleOpenChange(false);
         } else if (label === "Neural Insights") {
             setShowNeuralInsights(true);
-            setIsOpen(false);
+            handleOpenChange(false);
         } else if (href) {
             window.location.href = href;
         }
@@ -135,7 +149,7 @@ export default function CardNav({
 
                 {/* Toggle Button */}
                 <button
-                    onClick={() => setIsOpen(!isOpen)}
+                    onClick={() => handleOpenChange(!isOpen)}
                     className="rounded-full px-6 py-2 flex items-center gap-2 font-medium tracking-wide transition-transform hover:scale-105 active:scale-95"
                     style={{
                         backgroundColor: buttonBgColor,

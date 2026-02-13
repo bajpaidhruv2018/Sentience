@@ -1,4 +1,4 @@
-
+import { useState } from "react";
 import { motion } from "framer-motion";
 // @ts-ignore
 import Hyperspeed from "@/components/Hyperspeed";
@@ -10,6 +10,7 @@ import HeroScrollVideo from "@/components/ui/scroll-animated-video";
 
 
 export default function SentienceLanding() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navItems = [
         {
             label: "CBT Studio",
@@ -58,6 +59,8 @@ export default function SentienceLanding() {
                 buttonBgColor="#ffffff"
                 buttonTextColor="#000000"
                 ease="circ.out"
+                isOpen={isMenuOpen}
+                onOpenChange={setIsMenuOpen}
             />
 
             {/* Hero Section */}
@@ -87,6 +90,7 @@ export default function SentienceLanding() {
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => setIsMenuOpen(true)}
                         className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-bold tracking-wide shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(0,255,255,0.3)] hover:bg-white/20 transition-all"
                     >
                         BEGIN JOURNEY
