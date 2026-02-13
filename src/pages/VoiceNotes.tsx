@@ -100,6 +100,7 @@ export default function VoiceNotes() {
     useEffect(() => {
         const envKey = import.meta.env.VITE_GROQ_API_KEY;
         const storedKey = localStorage.getItem('groq_api_key');
+
         if (storedKey) setApiKey(storedKey);
         else if (envKey) setApiKey(envKey);
     }, []);
@@ -149,9 +150,8 @@ export default function VoiceNotes() {
         setCurrentMood(mood);
 
         try {
-            // Use the specific provided key if available, otherwise the loaded state
-            const effectiveKey = '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'; // Force use this key for testing as requested
-            const groq = new Groq({ apiKey: effectiveKey, dangerouslyAllowBrowser: true });
+            // Use the state apiKey
+            const groq = new Groq({ apiKey: apiKey, dangerouslyAllowBrowser: true });
 
             const completion = await groq.chat.completions.create({
                 messages: [
